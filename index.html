@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel de Chamados Internos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <header class="topo">
+      <div>
+        <p class="kicker">SUPORTE INTERNO</p>
+        <h1>Painel de Chamados</h1>
+        <p class="subtitulo">Cadastre, acompanhe e filtre solicitações internas.</p>
+      </div>
+
+      <div class="indicadores">
+        <div class="indicador">
+          <span id="totalChamados">0</span>
+          <small>Total</small>
+        </div>
+        <div class="indicador">
+          <span id="totalAbertos">0</span>
+          <small>Abertos</small>
+        </div>
+      </div>
+    </header>
+
+    <section class="grid">
+      <form id="formChamado" class="card formulario">
+        <h2>Novo chamado</h2>
+
+        <label for="titulo">Título</label>
+        <input id="titulo" name="titulo" type="text" placeholder="Ex.: Impressora não responde">
+
+        <label for="categoria">Categoria</label>
+        <select id="categoria" name="categoria">
+          <option value="Hardware">Hardware</option>
+          <option value="Software">Software</option>
+          <option value="Acesso">Acesso</option>
+          <option value="Rede">Rede</option>
+        </select>
+
+        <label for="prioridade">Prioridade</label>
+        <select id="prioridade" name="prioridade">
+          <option value="Baixa">Baixa</option>
+          <option value="Média">Média</option>
+          <option value="Alta">Alta</option>
+        </select>
+
+        <label for="descricao">Descrição</label>
+        <textarea id="descricao" name="descricao" rows="5" placeholder="Descreva o problema observado"></textarea>
+
+        <p id="mensagemErro" class="erro" aria-live="polite"></p>
+
+        <button type="submit">Cadastrar chamado</button>
+      </form>
+
+      <section class="card chamados">
+        <div class="barra">
+          <div>
+            <p class="kicker">ACOMPANHAMENTO</p>
+            <h2>Chamados cadastrados</h2>
+          </div>
+
+          <label class="filtro">
+            Status
+            <select id="filtroStatus">
+              <option value="Todos">Todos</option>
+              <option value="Aberto">Aberto</option>
+              <option value="Em andamento">Em andamento</option>
+              <option value="Concluído">Concluído</option>
+            </select>
+          </label>
+        </div>
+
+        <div id="listaChamados" class="lista-vazia">
+          Nenhum chamado cadastrado.
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
