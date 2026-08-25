@@ -22,12 +22,12 @@ let chamados = [];
 // TODO 1
 function criarChamado() {
   return {
-    id: Date.now(),
+    id: window.chamadoEmEdicao || Date.now(),
     titulo: titulo.value,
     categoria: categoria.value,
     prioridade: prioridade.value,
     descricao: descricao.value,
-    status: "Aberto"
+    status: window.statusOriginal || "Aberto"
   };
 }
 
@@ -58,6 +58,8 @@ function renderizarChamados() {
       <p>Descrição: ${chamado.descricao}</p>
       <p>Status: ${chamado.status}</p>
       <button onclick="avancarStatus(${chamado.id})">Avançar status</button>
+      <button onclick="editarChamado(${chamado.id})" class="editbuton">Editar</button>
+      <button onclick="deletarChamado(${chamado.id})" class="delbuton">Deletar</button>
     </div>
   `).join("");
 }
@@ -97,6 +99,9 @@ form.addEventListener("submit", (event) => {
   salvarChamados();
 
   form.reset();
+  window.chamadoEmEdicao = null;
+  window.statusOriginal = null;
+
   renderizarChamados();
 });
 
@@ -123,3 +128,32 @@ totalAbertos.textContent = chamados.filter(chamado => chamado.status === "Aberto
 // Atividade Parte 2
 // 24/08/2026
 
+// Plugin 1: Deletar Chamado
+
+function deletarChamado(id) {
+  if (confirm("Tem certeza que deseja deletar este chamado?")) {
+    chamados = chamados.filter(chamado => chamado.id !== id);
+    salvarChamados();
+    renderizarChamados();
+  }
+}
+
+// Plugin 2: Editar Chamado
+
+function editarChamado(id) {
+  const chamado = chamados.find(chamado => chamado.id === id);
+
+  if (!chamado) return;
+
+  titulo.value = chamado.titulo;
+  categoria.value = chamado.categoria;
+  prioridade.value = chamado.prioridade;
+  descricao.value = chamado.descricao;
+
+  window.chamadoEmEdicao = id;
+  window.statusOriginal = chamado.status;
+
+  chamados = chamados.filter(c => c.id !== id);
+
+  form.scrollIntoView({ behavior: "smooth" });
+}
