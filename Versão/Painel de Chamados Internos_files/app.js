@@ -33,17 +33,8 @@ function criarChamado() {
 
 // TODO 2
 function renderizarChamados() {
-  const filtro = filtroStatus.value;
-  const termoPesquisa = busca.value.trim().toLowerCase();
-
-  let chamadosFiltrados = filtro === "Todos"
-    ? chamados
-    : chamados.filter(chamado => chamado.status === filtro);
-      
-  chamadosFiltrados = chamadosFiltrados.filter(chamado => 
-    chamado.titulo.toLowerCase().includes(termoPesquisa) ||
-    chamado.descricao.toLowerCase().includes(termoPesquisa)
-  );
+  const chamadosFiltrados = obterChamadosVisiveis();
+  busca.addEventListener("input", renderizarChamados);
 
   if (chamadosFiltrados.length === 0) {
     listaChamados.innerHTML = "Nenhum chamado cadastrado.";
@@ -63,8 +54,6 @@ function renderizarChamados() {
     </div>
   `).join("");
 }
-
-busca.addEventListener("input", renderizarChamados);
 
 // TODO 3
 function avancarStatus(id) {
@@ -166,4 +155,21 @@ function atualizarChamados() {
   totalAbertos.textContent = chamados.filter(c => c.status === "Aberto").length;
 }
 
-// Chame em: deletarChamado(), form.addEventListener("submit",...), avancarStatus()
+// Plugin 3: Obtem os chamados visiveis
+
+function obterChamadosVisiveis() {
+  const filtro = filtroStatus.value;
+  const termoPesquisa = busca.value.trim().toLowerCase();
+
+  let chamadosFiltrados = filtro === "Todos"
+    ? chamados
+    : chamados.filter(chamado => chamado.status === filtro);
+      
+  chamadosFiltrados = chamadosFiltrados.filter(chamado => 
+    chamado.titulo.toLowerCase().includes(termoPesquisa) ||
+    chamado.descricao.toLowerCase().includes(termoPesquisa)
+  );
+
+  return chamadosFiltrados;
+  
+}
