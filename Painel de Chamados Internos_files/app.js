@@ -10,7 +10,7 @@ const descricao = document.querySelector("#descricao");
 const mensagemErro = document.querySelector("#mensagemErro");
 
 const listaChamados = document.querySelector("#listaChamados");
-const pesquisabox = document.querySelector("#pesquisabox");
+const busca = document.querySelector("#pesquisabox");
 const filtroStatus = document.querySelector("#filtroStatus");
 const totalChamados = document.querySelector("#totalChamados");
 const totalAbertos = document.querySelector("#totalAbertos");
@@ -34,7 +34,7 @@ function criarChamado() {
 // TODO 2
 function renderizarChamados() {
   const filtro = filtroStatus.value;
-  const termoPesquisa = pesquisabox.value.toLowerCase();
+  const termoPesquisa = busca.value.trim().toLowerCase();
 
   let chamadosFiltrados = filtro === "Todos"
     ? chamados
@@ -63,9 +63,8 @@ function renderizarChamados() {
     </div>
   `).join("");
 }
-pesquisabox.addEventListener("input", () => {
-  renderizarChamados();
-});
+
+busca.addEventListener("input", renderizarChamados);
 
 // TODO 3
 function avancarStatus(id) {
